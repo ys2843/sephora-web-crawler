@@ -9,14 +9,11 @@ import scrapy
 
 
 class SephoracrawlerItem(scrapy.Item):
-    # define the fields for your item here like:
-    # name = scrapy.Field()
+    ingredients = scrapy.Field()
     name = scrapy.Field()
     price = scrapy.Field()
     category = scrapy.Field()
     sub_category = scrapy.Field()
-    affiliate_link = scrapy.Field()
-    website = scrapy.Field()
+    url = scrapy.Field()
     brand = scrapy.Field()
-    images = scrapy.Field()
-    image_urls = scrapy.Field()
+    image = scrapy.Field()
