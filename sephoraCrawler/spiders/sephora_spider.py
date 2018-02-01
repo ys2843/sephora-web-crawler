@@ -22,6 +22,8 @@ class SephoraSpider(scrapy.Spider):
         loop_urls = response.xpath('//div[@class="css-hcszpw"]//a[@class="css-6w3omd"]/@href').extract()
         # Loop through each category
         for url in loop_urls[3:]:
+            if url == '/shop/skin-care-tools':
+                continue
             # Go to the first page, prepare for parse_second_level function
             full_url = 'https://www.sephora.com' + url + '?currentPage=1'
             yield scrapy.Request(url=full_url, callback=self.parse_second_level)

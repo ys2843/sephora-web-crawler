@@ -31,5 +31,3 @@ class SephoracrawlerPipeline(object):
                     level=log.DEBUG, spider=spider)
         return item
 
-    def close_spider(self, spider):
-        self.collection.close()
