@@ -1,108 +1,86 @@
-import json
-
 import scrapy
-from scrapy.spiders import Rule, CrawlSpider
-from scrapy.linkextractors import LinkExtractor
-# from scrapy.utils.response import get_base_url
-
-from sephoraCrawler.items import SephoracrawlerItem
-import urlparse
+import re
+from selenium import webdriver
 
 
-class SephoraSpider(CrawlSpider):
-    name = "sephora"
-    custom_settings = {"IMAGES_STORE": '../images/sephora'}
+class SephoraSpider(scrapy.Spider):
+    # The name of the spider
+    name = "sephorasp"
 
-    allowed_domains = ["sephora.com"]
-    start_urls = [
-        'http://www.sephora.com/search/search.jsp?keyword=skincare&mode=all'
-    ]
+    def __init__(self, **kwargs):
+        super(SephoraSpider, self, **kwargs)
+        # Initialize the web driver,
+        self.driver = webdriver.Chrome('./chromedriver')
 
-    rules = (
-        Rule(LinkExtractor(
-            # restrict_xpaths='//ul/li/a[contains(@href, "page")])'),
-            allow=(r'.*Npp.*', )),
-            callback='parse_items',
-            follow=True
-        ),
-        # Rule(LinkExtractor(
-        #     restrict_xpaths='//ul[@class="refineItemOptions"][0]/li/a'),
-        #     # allow=(),
-        #     callback='parse_category',
-        #     follow=True
-        # ),
-    )
+    def start_requests(self):
+        # Start page is 'https://www.sephora.com/shop/skincare'
+        url = 'https://www.sephora.com/shop/skincare'
+        yield scrapy.Request(url=url, callback=self.parse_first_level)
 
-    def parse_start_url(self, response):
-        print("entered")
-        cat_json = response.xpath(
-            '//script[@id="searchResult"]/text()').extract_first()
-        f = open('sample_json.json', 'w+')
-        f.write(cat_json.encode("utf-8"))
-        f.close()
-        all_url_data = json.loads(cat_json)
-        all_links = []
-        category = all_url_data['categories']['name']
-        for each_sub_category in all_url_data['categories']['sub_categories']:
-            link = each_sub_category['seo_path'].replace("/", "")
-            print("mylink", link)
-            full_url = "http://www.sephora.com/rest/products/"\
-                       "?pageSize=-1&   &"\
-                       "categoryName={0}&include_categories=true"\
-                       "&include_refinements=true".format(link)
-            print("url", full_url)
-            my_request = scrapy.Request(
-                full_url,
-                self.parse_items)
-            my_request.meta['category'] = {
-                "sub_category": each_sub_category['name'],
-                "category": category,
-                "to_replace": "currentPage=1"
-            }
-            print ("meta", my_request.meta)
-            all_links.append(my_request)
-        print(all_links)
-        return all_links
+    def parse_first_level(self, response):
+        # Find the title of each category
+        loop_urls = response.xpath('//div[@class="css-hcszpw"]//a[@class="css-6w3omd"]/@href').extract()
+        # Loop through each category
+        for url in loop_urls[3:]:
+            # Go to the first page, prepare for parse_second_level function
+            full_url = 'https://www.sephora.com' + url + '?currentPage=1'
+            yield scrapy.Request(url=full_url, callback=self.parse_second_level)
 
-    def parse_items(self, response):
-        print("---------------------------------------------")
-        category = response.meta['category']['category']
-        sub_category = response.meta['category']['sub_category']
-        print(category, sub_category)
-        website = "sephora.com"
-        data = json.loads(response.body)
-        print(data.keys())
-        if "products" not in data:
-            return
-        for each_item in data["products"]:
-            name = each_item["display_name"]
-            price = each_item['derived_sku']["list_price"]
-            image_urls = urlparse.urljoin(response.url, each_item['hero_image'])
-            image_urls = [image_urls]
-            brand = each_item["brand_name"]
-            affiliate_link = urlparse.urljoin(response.url, each_item["product_url"])
-            item = SephoracrawlerItem(
-                name=name.strip(),
-                price=price.strip(),
-                image_urls=image_urls,
-                brand=brand.strip(),
-                affiliate_link=affiliate_link,
-                category=category,
-                sub_category=sub_category,
-                website=website
-            )
-            yield item
+    def parse_second_level(self, response):
+        # Web driver gets involved, scroll to the end to the page to scan the lazy load information
+        self.driver.get(response.url)
+        self.scroll_till_end()
+        # Extract products element and loop through each product
+        products_urls = self.driver.find_elements_by_xpath('//div[@class="css-115paux"]/a[@class="css-1tguw7u"]')
+        for url in products_urls:
+            # Extract product's url then go to next level
+            full_url = url.get_attribute('href')
+            yield scrapy.Request(url=full_url, callback=self.parse_item_page)
+        # if 'next page' button is active, then go to next page. If not, print 'Reach the End of One Category'
+        try:
+            # Search for 'next page' button
+            button_element = self.driver.find_element_by_xpath('//button[@class="css-1mf8x14"]')
+            button_element.find_element_by_xpath('./svg[@class="css-6952th"]')
+            next_page_url = response.url.split('?')[0] + '?currentPage=' + str(int(response.split('=')[1]) + 1)
+            yield scrapy.Request(url=next_page_url, callback=self.parse_second_level)
+        except:
+            print("===========Reach The End of One Category=============")
 
-        to_replace = response.meta['to_replace']
-        next_number = int(to_replace.replace("currentPage=", "")) + 1
-        next_link = response.url.replace(
-            to_replace, "currentPage=" + str(next_number))
-        my_request = scrapy.Request(
-            next_link,
-            self.parse_items)
-        my_request.meta['category'] = {
-            "sub_category": sub_category,
-            "category": category,
-            "to_replace": "currentPage=" + str(next_number)
-        }
-        yield my_request
+    def parse_item_page(self, response):
+        # In case some products have no ingredients
+        if len(response.xpath('//div[@class="css-8tl366"]')) >= 2:
+            ingredients = response.xpath('//div[@class="css-8tl366"]')[2].xpath('./text()').extract_first()
+        else:
+            ingredients = 'None'
+
+        name = response.xpath('//span[@class="css-1g2jq23"]/text()').extract_first()
+        price = response.xpath('//div[@class="css-18suhml"]/text()').extract_first()
+        brand = response.xpath('//a[@class="css-zvvfrv"]/span[@class="css-cjz2sh"]/text()').extract_first()
+        image = response.xpath('//svg[@class="css-8a9gku"]/image')[0].extract()
+        image_url = 'www.sephora.com' + re.search('xlink:href="(.*)" onload', image).group(1)
+
+        # In case some products has no sub-category
+        if len(response.xpath('//div[@class="css-12alag6"]/a[@class="css-u2mtre"]/text()')) > 1:
+            category = response.xpath('//div[@class="css-12alag6"]/a[@class="css-u2mtre"]/text()')[1].extract()
+            sub_category = response.xpath('//div[@class="css-1lb5emk"]/a[@class="css-1i9riiu"]/text()').extract_first()
+        else:
+            category = response.xpath('//div[@class="css-1lb5emk"]/a[@class="css-1i9riiu"]/text()').extract()
+            sub_category = "None"
+
+        url = response.url
+        yield {'name': name,
+               'ingredients': ingredients,
+               'price': price,
+               'category': category,
+               'sub_category': sub_category,
+               'url': url,
+               'brand': brand,
+               'image': image_url}
+
+    def scroll_till_end(self):
+        # scroll 5 times to the end to load all 5 groups of products
+        self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight/5);")
+        self.driver.execute_script("window.scrollTo(document.body.scrollHeight/5, document.body.scrollHeight*2/5);")
+        self.driver.execute_script("window.scrollTo(document.body.scrollHeight*2/5, document.body.scrollHeight*3/5);")
+        self.driver.execute_script("window.scrollTo(document.body.scrollHeight*3/5, document.body.scrollHeight*4/5);")
+        self.driver.execute_script("window.scrollTo(document.body.scrollHeight*4/5, document.body.scrollHeight);")
