@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-
-# Define your item pipelines here
-#
-# Don't forget to add your pipeline to the ITEM_PIPELINES setting
-# See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import pymongo
 from scrapy.conf import settings
 from scrapy.exceptions import DropItem
@@ -18,16 +12,33 @@ class SephoracrawlerPipeline(object):
         )
         self.db = collection[settings['MONGO_DB']]
         self.collection = self.db[settings['MONGO_COLL']]
+        self.ten_skincare_ingredients_to_avoid = ['retinoids', 'tetracycline',
+                                                  'hydroquinone', 'phthalates',
+                                                  'formaldehyde', 'toluene',
+                                                  'ammonia', 'dihydroxyacetone',
+                                                  'thioglycolic acid', 'botulinim toxin']
 
     def process_item(self, item, spider):
         valid = True
         for data in item:
             if not data:
-                valid = False
                 raise DropItem("Missing {0}!".format(data))
         if valid:
+            unsafe_ingredients = self.check_safety(item['ingredients'])
+            if unsafe_ingredients:
+                item['unsafe_ingredients'] = unsafe_ingredients
+                item['is_safe'] = False
             self.collection.insert(dict(item))
             log.msg("Product added to MongoDB database!",
                     level=log.DEBUG, spider=spider)
         return item
 
+    def check_safety(self, ingredients):
+        if not ingredients:
+            return []
+        contain_unsafe_ingredients = []
+        for unsafe_ingredient in self.ten_skincare_ingredients_to_avoid:
+            for tuples in ingredients:
+                if unsafe_ingredient in tuples.lower():
+                    contain_unsafe_ingredients.append(unsafe_ingredient)
+        return contain_unsafe_ingredients

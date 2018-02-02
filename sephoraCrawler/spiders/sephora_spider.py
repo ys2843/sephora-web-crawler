@@ -1,6 +1,8 @@
 import scrapy
 import re
+from selenium.common.exceptions import NoSuchElementException
 from selenium import webdriver
+import time
 
 
 class SephoraSpider(scrapy.Spider):
@@ -16,6 +18,8 @@ class SephoraSpider(scrapy.Spider):
         # Start page is 'https://www.sephora.com/shop/skincare'
         url = 'https://www.sephora.com/shop/skincare'
         yield scrapy.Request(url=url, callback=self.parse_first_level)
+        # url = 'https://www.sephora.com/shop/inner-beauty-products?currentPage=1'
+        # yield scrapy.Request(url=url, callback=self.parse_second_level)
 
     def parse_first_level(self, response):
         # Find the title of each category
@@ -38,23 +42,21 @@ class SephoraSpider(scrapy.Spider):
             # Extract product's url then go to next level
             full_url = url.get_attribute('href')
             yield scrapy.Request(url=full_url, callback=self.parse_item_page)
+            # print(full_url)
+
         # if 'next page' button is active, then go to next page. If not, print 'Reach the End of One Category'
         try:
-            # Search for 'next page' button
-            button_element = self.driver.find_element_by_xpath('//button[@class="css-1mf8x14"]')
-            button_element.find_element_by_xpath('./svg[@class="css-6952th"]')
-            next_page_url = response.url.split('?')[0] + '?currentPage=' + str(int(response.split('=')[1]) + 1)
+            self.driver.find_element_by_xpath('//button[@class="css-1mf8x14"]/*[name()="svg" and @class="css-6952th"]')
+            next_page_url = response.url.split('?')[0] + '?currentPage=' + str(int(response.url.split('=')[1]) + 1)
             yield scrapy.Request(url=next_page_url, callback=self.parse_second_level)
-        except:
-            print("===========Reach The End of One Category=============")
+        except NoSuchElementException:
+            print("===============================Reach the End of one category================================")
 
     def parse_item_page(self, response):
         # In case some products have no ingredients
+        ingredients = 'None'
         if len(response.xpath('//div[@class="css-8tl366"]')) >= 2:
-            ingredients = response.xpath('//div[@class="css-8tl366"]')[2].xpath('./text()').extract_first()
-        else:
-            ingredients = 'None'
-
+            ingredients = response.xpath('//div[@class="css-8tl366"]')[-1].xpath('./text()').extract()
         name = response.xpath('//span[@class="css-1g2jq23"]/text()').extract_first()
         price = response.xpath('//div[@class="css-18suhml"]/text()').extract_first()
         brand = response.xpath('//a[@class="css-zvvfrv"]/span[@class="css-cjz2sh"]/text()').extract_first()
@@ -77,12 +79,19 @@ class SephoraSpider(scrapy.Spider):
                'sub_category': sub_category,
                'url': url,
                'brand': brand,
-               'image': image_url}
+               'image': image_url,
+               'unsafe_ingredients': 'None',
+               'is_safe': True}
 
     def scroll_till_end(self):
         # scroll 5 times to the end to load all 5 groups of products
         self.driver.execute_script("window.scrollTo(0, document.body.scrollHeight/5);")
+        time.sleep(50.0 / 1000.0)
         self.driver.execute_script("window.scrollTo(document.body.scrollHeight/5, document.body.scrollHeight*2/5);")
+        time.sleep(50.0 / 1000.0)
         self.driver.execute_script("window.scrollTo(document.body.scrollHeight*2/5, document.body.scrollHeight*3/5);")
+        time.sleep(50.0 / 1000.0)
         self.driver.execute_script("window.scrollTo(document.body.scrollHeight*3/5, document.body.scrollHeight*4/5);")
+        time.sleep(50.0 / 1000.0)
         self.driver.execute_script("window.scrollTo(document.body.scrollHeight*4/5, document.body.scrollHeight);")
+        time.sleep(50.0 / 1000.0)

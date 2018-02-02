@@ -17,3 +17,5 @@ class SephoracrawlerItem(scrapy.Item):
     url = scrapy.Field()
     brand = scrapy.Field()
     image = scrapy.Field()
+    unsafe_ingredients = scrapy.Field()
+    is_safe = scrapy.Field()
