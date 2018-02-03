@@ -2,8 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8f6b600c-e328-4ad2-ac7d-cd51c11afade" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sephoraCrawler/items.py" afterPath="$PROJECT_DIR$/sephoraCrawler/items.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sephoraCrawler/middlewares.py" afterPath="$PROJECT_DIR$/sephoraCrawler/middlewares.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sephoraCrawler/pipelines.py" afterPath="$PROJECT_DIR$/sephoraCrawler/pipelines.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sephoraCrawler/spiders/sephora_spider.py" afterPath="$PROJECT_DIR$/sephoraCrawler/spiders/sephora_spider.py" />
     </list>
@@ -16,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="sephora_spider.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="sephora_spider.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/sephoraCrawler/spiders/sephora_spider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-496">
-              <caret line="44" column="21" lean-forward="false" selection-start-line="44" selection-start-column="21" selection-end-line="44" selection-end-column="21" />
+            <state relative-caret-position="735">
+              <caret line="49" column="102" lean-forward="false" selection-start-line="49" selection-start-column="102" selection-end-line="49" selection-end-column="102" />
               <folding>
                 <element signature="e#0#13#0" expanded="true" />
               </folding>
@@ -28,11 +26,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="pipelines.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="pipelines.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sephoraCrawler/pipelines.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+            <state relative-caret-position="81">
+              <caret line="18" column="3" lean-forward="true" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
@@ -63,15 +61,15 @@
         <option value="$PROJECT_DIR$/sephoraCrawler/middlewares.py" />
         <option value="$PROJECT_DIR$/sephoraCrawler/spiders/searchIngredients.py" />
         <option value="$PROJECT_DIR$/sephoraCrawler/items.py" />
-        <option value="$PROJECT_DIR$/sephoraCrawler/pipelines.py" />
         <option value="$PROJECT_DIR$/sephoraCrawler/spiders/sephora_spider.py" />
+        <option value="$PROJECT_DIR$/sephoraCrawler/pipelines.py" />
       </list>
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="189" />
-    <option name="y" value="82" />
-    <option name="width" value="1289" />
+    <option name="x" value="30" />
+    <option name="y" value="81" />
+    <option name="width" value="1415" />
     <option name="height" value="749" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -146,10 +144,10 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="189" y="82" width="1289" height="749" extended-state="0" />
+    <frame x="30" y="81" width="1415" height="749" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15557338" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.14129643" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32874617" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
@@ -388,22 +386,22 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sephoraCrawler/pipelines.py">
+    <entry file="file://$PROJECT_DIR$/sephoraCrawler/spiders/sephora_spider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        <state relative-caret-position="735">
+          <caret line="49" column="102" lean-forward="false" selection-start-line="49" selection-start-column="102" selection-end-line="49" selection-end-column="102" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#0#13#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sephoraCrawler/spiders/sephora_spider.py">
+    <entry file="file://$PROJECT_DIR$/sephoraCrawler/pipelines.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-496">
-          <caret line="44" column="21" lean-forward="false" selection-start-line="44" selection-start-column="21" selection-end-line="44" selection-end-column="21" />
+        <state relative-caret-position="81">
+          <caret line="18" column="3" lean-forward="true" selection-start-line="18" selection-start-column="3" selection-end-line="18" selection-end-column="3" />
           <folding>
-            <element signature="e#0#13#0" expanded="true" />
+            <element signature="e#0#14#0" expanded="true" />
           </folding>
         </state>
       </provider>

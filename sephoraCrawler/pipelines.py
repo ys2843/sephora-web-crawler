@@ -12,11 +12,16 @@ class SephoracrawlerPipeline(object):
         )
         self.db = collection[settings['MONGO_DB']]
         self.collection = self.db[settings['MONGO_COLL']]
-        self.ten_skincare_ingredients_to_avoid = ['retinoids', 'tetracycline',
-                                                  'hydroquinone', 'phthalates',
-                                                  'formaldehyde', 'toluene',
-                                                  'ammonia', 'dihydroxyacetone',
-                                                  'thioglycolic acid', 'botulinim toxin']
+        self.ten_skincare_ingredients_to_avoid = ['lead', 'triclosan', 'oxybenzone', 'bht',
+                                                  'butylated hydroxyanisole', 'bha',
+                                                  'butylated hydroxytoluene', 'coal tar', 'paraben', 'phthalates',
+                                                  'formaldehyde',
+                                                  'eda', 'dithanolamine', 'triethanolamine', 'toluene', 'retinoids',
+                                                  'retin a',
+                                                  'salycylic acid', 'bpa', 'bithionol',
+                                                  'chlorofluorocarbon propellants', 'chloroform',
+                                                  'hexachlorophene', 'mercury', 'methylene chloride', 'vinyl chloride',
+                                                  'zirconium', 'talc']
 
     def process_item(self, item, spider):
         valid = True

@@ -18,8 +18,6 @@ class SephoraSpider(scrapy.Spider):
         # Start page is 'https://www.sephora.com/shop/skincare'
         url = 'https://www.sephora.com/shop/skincare'
         yield scrapy.Request(url=url, callback=self.parse_first_level)
-        # url = 'https://www.sephora.com/shop/inner-beauty-products?currentPage=1'
-        # yield scrapy.Request(url=url, callback=self.parse_second_level)
 
     def parse_first_level(self, response):
         # Find the title of each category
@@ -42,7 +40,6 @@ class SephoraSpider(scrapy.Spider):
             # Extract product's url then go to next level
             full_url = url.get_attribute('href')
             yield scrapy.Request(url=full_url, callback=self.parse_item_page)
-            # print(full_url)
 
         # if 'next page' button is active, then go to next page. If not, print 'Reach the End of One Category'
         try:
@@ -50,7 +47,7 @@ class SephoraSpider(scrapy.Spider):
             next_page_url = response.url.split('?')[0] + '?currentPage=' + str(int(response.url.split('=')[1]) + 1)
             yield scrapy.Request(url=next_page_url, callback=self.parse_second_level)
         except NoSuchElementException:
-            print("===============================Reach the End of one category================================")
+            print("===========================Reach the End of one category===========================")
 
     def parse_item_page(self, response):
         # In case some products have no ingredients
