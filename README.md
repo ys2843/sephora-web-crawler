@@ -150,4 +150,4 @@ ITEM_PIPELINES = {
 ```
 ### Future Works
 + Increase accuracy of data extraction part, while some products have different page structure.
-+ With some modification to `spider.py`, this spider can extend its capacity to download all categorys' product.
++ With some modification to `spider.py`, this spider can extend its capacity to download products from all categories.
