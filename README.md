@@ -127,7 +127,7 @@ The purpose of pipelines is to check the ingridents field of each item, whether 
                     contain_unsafe_ingredients.append(unsafe_ingredient)
         return contain_unsafe_ingredients
 ```
-# Settings
+### Settings
 In `Settings.py`, we mainly need to set up:
 + Connection to the database
 ```python
@@ -148,6 +148,6 @@ ITEM_PIPELINES = {
     'sephoraCrawler.pipelines.SephoracrawlerPipeline': 300,
 }
 ```
-### Future Works
+# Future Works
 + Increase accuracy of data extraction part, while some products have different page structure.
 + With some modification to `spider.py`, this spider can extend its capacity to download products from all categories.
