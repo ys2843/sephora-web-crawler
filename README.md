@@ -15,11 +15,11 @@ While keeping database active, go to the sephoraCrawler directory and type
 The spider runs automatially. 
 
 # Implementation
-This project is implemented using Scrapy Library with the help of Selenium Web driver to deal with lazy loading. The works mainly involves:
-+ Items fields
+This project is implemented using Scrapy Library with the help of Selenium Web Driver to deal with lazy loading. The works mainly involves:
++ Item fields
 + Scrapy spider
 + Pipelines
-+ Setting
++ Settings
 ### Items Fields
 `items.py` defines what attributes an item (a skincare product) has. All the fields are fetched from 'sephora' web page except `is_safe` and `unsafe_ingredients` which are assigned in the pipelines. 
 ``` python
@@ -127,7 +127,7 @@ The purpose of pipelines is to check the ingridents field of each item, whether 
                     contain_unsafe_ingredients.append(unsafe_ingredient)
         return contain_unsafe_ingredients
 ```
-### Settings
+# Settings
 In `Settings.py`, we mainly need to set up:
 + Connection to the database
 ```python
