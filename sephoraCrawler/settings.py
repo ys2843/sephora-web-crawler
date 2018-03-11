@@ -28,7 +28,7 @@ ROBOTSTXT_OBEY = False
 # See also autothrottle settings and docs
 DOWNLOAD_DELAY = 5
 # The download delay setting will honor only one of:
-CONCURRENT_REQUESTS_PER_DOMAIN = 4
+# CONCURRENT_REQUESTS_PER_DOMAIN = 4
 # CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
@@ -51,10 +51,10 @@ COOKIES_ENABLED = False
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-# DOWNLOADER_MIDDLEWARES = {
-#    'sephoraCrawler.middlewares.RandomUserAgentMiddleware': 300,
+DOWNLOADER_MIDDLEWARES = {
+    'sephoraCrawler.middlewares.DownloadMiddleware': 100,
 
-# }
+}
 # FAKEUSERAGENT_FALLBACK = 'Mozilla'
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html

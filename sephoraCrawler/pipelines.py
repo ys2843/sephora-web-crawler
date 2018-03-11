@@ -1,7 +1,6 @@
 import pymongo
 from scrapy.conf import settings
 from scrapy.exceptions import DropItem
-from scrapy import log
 
 
 class SephoracrawlerPipeline(object):
@@ -24,6 +23,7 @@ class SephoracrawlerPipeline(object):
                                                   'zirconium', 'talc']
 
     def process_item(self, item, spider):
+        print("================Pipelines works!==============")
         valid = True
         for data in item:
             if not data:
@@ -34,8 +34,7 @@ class SephoracrawlerPipeline(object):
                 item['unsafe_ingredients'] = unsafe_ingredients
                 item['is_safe'] = False
             self.collection.insert(dict(item))
-            log.msg("Product added to MongoDB database!",
-                    level=log.DEBUG, spider=spider)
+
         return item
 
     def check_safety(self, ingredients):
