@@ -23,7 +23,7 @@ class SephoracrawlerPipeline(object):
                                                   'zirconium', 'talc']
 
     def process_item(self, item, spider):
-        print("================Pipelines works!==============")
+        # print("====================Pipelines works!======================")
         valid = True
         for data in item:
             if not data:

@@ -19,3 +19,5 @@ class SephoracrawlerItem(scrapy.Item):
     image = scrapy.Field()
     unsafe_ingredients = scrapy.Field()
     is_safe = scrapy.Field()
+    love_count = scrapy.Field()
+    detail = scrapy.Field()
