@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="8f6b600c-e328-4ad2-ac7d-cd51c11afade" name="Default" comment="">
-      <change type="DELETED" beforePath="$PROJECT_DIR$/sephoraCrawler/spiders/sephora_spider[Deprecated].py" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/README.md" afterPath="$PROJECT_DIR$/README.md" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/sephoraCrawler/spiders/sephora_crawl_spider.py" afterPath="$PROJECT_DIR$/sephoraCrawler/spiders/sephora_crawl_spider.py" />
-    </list>
+    <list default="true" id="8f6b600c-e328-4ad2-ac7d-cd51c11afade" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,7 +11,7 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="sephora_crawl_spider.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="sephora_crawl_spider.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/sephoraCrawler/spiders/sephora_crawl_spider.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="407">
@@ -40,7 +35,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="true">
+      <file leaf-file-name="requirements.txt" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/requirements.txt">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="60">
@@ -96,7 +91,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="x" value="361" />
     <option name="y" value="23" />
     <option name="width" value="919" />
@@ -193,7 +188,7 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="361" y="23" width="919" height="777" extended-state="1" />
+    <frame x="361" y="23" width="919" height="777" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.34207526" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
@@ -463,16 +458,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sephoraCrawler/spiders/sephora_crawl_spider.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="407">
-          <caret line="62" column="36" lean-forward="false" selection-start-line="62" selection-start-column="36" selection-end-line="62" selection-end-column="36" />
-          <folding>
-            <element signature="e#0#44#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/sephoraCrawler/pipelines.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="162">
@@ -488,6 +473,16 @@
         <state relative-caret-position="60">
           <caret line="4" column="0" lean-forward="true" selection-start-line="4" selection-start-column="0" selection-end-line="4" selection-end-column="0" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/sephoraCrawler/spiders/sephora_crawl_spider.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="407">
+          <caret line="62" column="36" lean-forward="false" selection-start-line="62" selection-start-column="36" selection-end-line="62" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#44#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

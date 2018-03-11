@@ -2,13 +2,13 @@
 This project is designed to gather information for Skincare Ingredients Look up Website Project. This web crawler download the detail information of all products on [www.sephora.com](www.sephora.com). MongoDB is used to store the data.
 ## Getting Started
 
-Before running, set up database configuration in `setting.py`(See **Settings** part). 
+Before running, 
 
-While keeping database active, go to the sephoraCrawler directory and type 
++ Install dependent packages, enter `pip install requirements.txt`.
 
-`scrapy crawl sephoracsp`
 
-The spider runs automatially. 
++ Set up database configuration in `setting.py`(See **Settings** part). 
++ While keeping database active, go to the sephoraCrawler directory and type `scrapy crawl sephoracsp`. The spider runs automatially. 
 
 ##Implementation
 
