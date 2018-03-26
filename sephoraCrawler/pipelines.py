@@ -34,7 +34,6 @@ class SephoracrawlerPipeline(object):
                 item['unsafe_ingredients'] = unsafe_ingredients
                 item['is_safe'] = False
             self.collection.insert(dict(item))
-
         return item
 
     def check_safety(self, ingredients):
