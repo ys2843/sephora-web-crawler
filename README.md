@@ -10,7 +10,7 @@ Before running,
 + Set up database configuration in `setting.py`(See **Settings** part). 
 + While keeping database active, go to the sephoraCrawler directory and type `scrapy crawl sephoracsp`. The spider runs automatially. 
 
-##Implementation
+## Implementation
 
 This project is implemented using Scrapy Library with the help of Selenium Web Driver to deal with lazy loading. The works mainly involves:
 + Item fields
